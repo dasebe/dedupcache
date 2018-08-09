@@ -16,7 +16,7 @@ struct CacheObject
 
     // comparison is based on all three properties
     bool operator==(const CacheObject &rhs) const {
-        return (rhs.id == id) && (rhs.size == size);
+        return (rhs.id.compare(id) == 0);
     }
 };
 
@@ -36,7 +36,7 @@ namespace std
         {
             size_t seed = 0;
             hash_combine<IdType>(seed, cobj.id);
-            hash_combine<uint64_t>(seed, cobj.size);
+            //            hash_combine<uint64_t>(seed, cobj.size);
             return seed;
         }
     };
