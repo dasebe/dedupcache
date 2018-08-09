@@ -12,6 +12,8 @@ using namespace std;
 
 int main (int argc, char* argv[])
 {
+    const uint64_t metaCap  = std::stoull(argv[1]);
+    const uint64_t dataCap  = std::stoull(argv[2]);
 
     // trace properties
     std::cerr << "startup\n";
@@ -22,8 +24,6 @@ int main (int argc, char* argv[])
     // cache init
     std::cerr << "cache init\n";
     const string cacheType = "LRU";
-    const uint64_t metaCap  = 1073741824000;
-    const uint64_t dataCap  = 1073741824000;
     unique_ptr<Cache> metaCache = move(Cache::create_unique(cacheType));
     unique_ptr<Cache> blockCache = move(Cache::create_unique(cacheType));
     if(metaCache == nullptr || blockCache == nullptr)
@@ -46,7 +46,7 @@ int main (int argc, char* argv[])
     unordered_map<std::string,entry> matches;
 
     std::cerr << "reading data\n";
-    for(int i=1; i<argc; i++) {
+    for(int i=3; i<argc; i++) {
         const char* path = argv[i];
         ifstream infile;
         infile.open(path);
