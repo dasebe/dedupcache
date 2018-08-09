@@ -17,7 +17,7 @@ int main (int argc, char* argv[])
 
     // trace properties
     std::cerr << "startup\n";
-    int64_t reqs = 0, reusematch = 0, storagematch = 0;
+    int64_t reqs = 0;
     int64_t ts, pid, blocksize, majordev, minordev;
     std::string proc, lba, rwflag, hash;
 
@@ -36,15 +36,6 @@ int main (int argc, char* argv[])
     bool metaHit, blockHit;
     int64_t fullHit = 0, falsePos = 0, falseNeg = 0;
 
-
-    // stats
-    std::cerr << "stats init\n";
-    struct entry {
-        std::unordered_set<std::string> lbas;
-        int64_t reqs;
-    };
-    unordered_map<std::string,entry> matches;
-
     std::cerr << "reading data\n";
     for(int i=3; i<argc; i++) {
         const char* path = argv[i];
@@ -55,18 +46,6 @@ int main (int argc, char* argv[])
         {
             //            std::cerr << ts << " " << lba << " " << hash << "\n";
             reqs++;
-            if(matches.count(hash)>0) {
-                //                std::cerr << lba << " " << hash << "\n";
-                reusematch++;
-                if(matches[hash].lbas.count(lba)==0) {
-                    storagematch++;
-                    matches[hash].lbas.insert(lba);
-                }
-            } else {
-                // first lba
-                matches[hash].lbas.insert(lba);
-            }
-            matches[hash].reqs++;
 
             // cache lookup
             reqLBA->reinit(lba,64);
@@ -91,7 +70,7 @@ int main (int argc, char* argv[])
         }
 
         infile.close();
-        std::cout << i << " " << path << " " << reqs << " " << reusematch << " " << storagematch << " fH " << fullHit << " fN " << falseNeg << " fp " << falsePos << " " << fullHit/double(reqs) << "\n";
+        std::cout << i << " " << path << " " << reqs << " fH " << fullHit << " fN " << falseNeg << " fp " << falsePos << " " << fullHit/double(reqs) << "\n";
         
     }
     return 0;
