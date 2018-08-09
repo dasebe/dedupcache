@@ -91,7 +91,7 @@ int main (int argc, char* argv[])
         }
 
         infile.close();
-        std::cout << i << " " << path << " " << reqs << " " << reusematch << " " << storagematch << " fH " << fullHit << " fN " << falseNeg << " fp " << falsePos << "\n";
+        std::cout << i << " " << path << " " << reqs << " " << reusematch << " " << storagematch << " fH " << fullHit << " fN " << falseNeg << " fp " << falsePos << " " << fullHit/double(reqs) << "\n";
         
     }
     return 0;
