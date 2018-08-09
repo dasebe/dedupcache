@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <iostream>
 
-typedef uint64_t IdType;
+typedef std::string IdType;
 
 // Request information
 class SimpleRequest

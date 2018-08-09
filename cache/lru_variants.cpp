@@ -18,11 +18,13 @@ bool LRUCache::lookup(SimpleRequest* req)
         hit(it, obj.size);
         return true;
     }
+    //    std::cerr << "m " << obj.id << " " << obj.size << "\n";
     return false;
 }
 
 void LRUCache::admit(SimpleRequest* req)
 {
+    //    std::cerr << "a " << req->getId() << " " << req->getSize() << "\n";
     const uint64_t size = req->getSize();
     // object feasible to store?
     if (size > _cacheSize) {
